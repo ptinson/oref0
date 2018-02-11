@@ -22,15 +22,16 @@ var detect = require('oref0/lib/determine-basal/autosens');
 if (!module.parent) {
     var detectsensitivity = init();
 
-    var glucose_input = process.argv.slice(2, 3).pop();
-    var pumphistory_input = process.argv.slice(3, 4).pop();
-    var isf_input = process.argv.slice(4, 5).pop()
-    var basalprofile_input = process.argv.slice(5, 6).pop()
-    var profile_input = process.argv.slice(6, 7).pop();
-    var carb_input = process.argv.slice(7, 8).pop()
+    var glucose_input = process.argv[2];
+    var pumphistory_input = process.argv[3];
+    var isf_input = process.argv[4]
+    var basalprofile_input = process.argv[5]
+    var profile_input = process.argv[6];
+    var carb_input = process.argv[7]
+    var temptarget_input = process.argv[8]
 
     if (!glucose_input || !pumphistory_input || !profile_input) {
-        console.error('usage: ', process.argv.slice(0, 2), '<glucose.json> <pumphistory.json> <insulin_sensitivities.json> <basal_profile.json> <profile.json> [carbhistory.json]');
+        console.error('usage: ', process.argv.slice(0, 2), '<glucose.json> <pumphistory.json> <insulin_sensitivities.json> <basal_profile.json> <profile.json> [carbhistory.json] [temptargets.json]');
         process.exit(1);
     }
     
@@ -72,6 +73,15 @@ if (!module.parent) {
             }
         }
 
+        var temptarget_data = { };
+        if (typeof temptarget_input != 'undefined') {
+            try {
+                temptarget_data = JSON.parse(fs.readFileSync(temptarget_input, 'utf8'));
+            } catch (e) {
+                console.error("Warning: could not parse "+temptarget_input);
+            }
+        }
+
         var iob_inputs = {
             history: pumphistory_data
             , profile: profile
@@ -86,14 +96,15 @@ if (!module.parent) {
         , carbs: carb_data
         , glucose_data: glucose_data
         , basalprofile: basalprofile
+        , temptargets: temptarget_data
         //, clock: clock_data
     };
-    // calculate sensitivity using 8h of non-exluded data
+    console.error("Calculating sensitivity using 8h of non-exluded data");
     detection_inputs.deviations = 96;
     detect(detection_inputs);
     ratio8h = ratio;
     newisf8h = newisf;
-    // calculate sensitivity using all non-exluded data (up to 24h)
+    console.error("Calculating sensitivity using all non-exluded data (up to 24h)");
     detection_inputs.deviations = 288;
     detect(detection_inputs);
     ratio24h = ratio;

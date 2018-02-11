@@ -26,7 +26,7 @@ describe('IOB', function() {
                 }],
                 profile: {
                     dia: 3,
-                    bolussnooze_dia_divisor: 2,
+                    //bolussnooze_dia_divisor: 2,
                     basalprofile: basalprofile,
                     current_basal: 1,
                     max_daily_basal: 1
@@ -36,13 +36,13 @@ describe('IOB', function() {
 
         var rightAfterBolus = require('../lib/iob')(inputs)[0];
         rightAfterBolus.iob.should.equal(2);
-        rightAfterBolus.bolussnooze.should.equal(2);
+        //rightAfterBolus.bolussnooze.should.equal(2);
 
         var hourLaterInputs = inputs;
         hourLaterInputs.clock = new Date(now + (60 * 60 * 1000)).toISOString();
         var hourLater = require('../lib/iob')(hourLaterInputs)[0];
         hourLater.iob.should.be.lessThan(1.45);
-        hourLater.bolussnooze.should.be.lessThan(.5);
+        //hourLater.bolussnooze.should.be.lessThan(.5);
         hourLater.iob.should.be.greaterThan(0);
         hourLater.activity.should.be.greaterThan(0.01);
         hourLater.activity.should.be.lessThan(0.02);
@@ -52,7 +52,7 @@ describe('IOB', function() {
         var afterDIA = require('../lib/iob')(afterDIAInputs)[0];
 
         afterDIA.iob.should.equal(0);
-        afterDIA.bolussnooze.should.equal(0);
+        //afterDIA.bolussnooze.should.equal(0);
     });
 
     it('should calculate IOB with Ultra-fast curve', function() {
@@ -75,7 +75,7 @@ describe('IOB', function() {
                 }],
                 profile: {
                     dia: 5,
-                    bolussnooze_dia_divisor: 2,
+                    //bolussnooze_dia_divisor: 2,
                     basalprofile: basalprofile,
                     current_basal: 1,
                     max_daily_basal: 1,
@@ -84,17 +84,17 @@ describe('IOB', function() {
             };
 
         var rightAfterBolus = require('../lib/iob')(inputs)[0];
-        
+
         rightAfterBolus.iob.should.equal(2);
-        rightAfterBolus.bolussnooze.should.equal(2);
+        //rightAfterBolus.bolussnooze.should.equal(2);
 
         var hourLaterInputs = inputs;
         hourLaterInputs.clock = new Date(now + (60 * 60 * 1000)).toISOString();
         var hourLater = require('../lib/iob')(hourLaterInputs)[0];
         hourLater.iob.should.be.lessThan(1.6);
         hourLater.iob.should.be.greaterThan(1.3);
-        
-        hourLater.bolussnooze.should.be.lessThan(1.7);
+
+        //hourLater.bolussnooze.should.be.lessThan(1.7);
         hourLater.iob.should.be.greaterThan(0);
         hourLater.activity.should.be.greaterThan(0.006);
         hourLater.activity.should.be.lessThan(0.015);
@@ -103,7 +103,7 @@ describe('IOB', function() {
         afterDIAInputs.clock = new Date(now + (5 * 60 * 60 * 1000)).toISOString();
         var afterDIA = require('../lib/iob')(afterDIAInputs)[0];
         afterDIA.iob.should.equal(0);
-        afterDIA.bolussnooze.should.equal(0);
+        //afterDIA.bolussnooze.should.equal(0);
     });
 
 
@@ -128,7 +128,7 @@ describe('IOB', function() {
                 profile: {
                     dia: 5,
                     insulinPeakTime: 55,
-                    bolussnooze_dia_divisor: 2,
+                    //bolussnooze_dia_divisor: 2,
                     basalprofile: basalprofile,
                     current_basal: 1,
                     max_daily_basal: 1,
@@ -138,13 +138,13 @@ describe('IOB', function() {
 
         var rightAfterBolus = require('../lib/iob')(inputs)[0];
         rightAfterBolus.iob.should.equal(1);
-        rightAfterBolus.bolussnooze.should.equal(1);
+        //rightAfterBolus.bolussnooze.should.equal(1);
 
         var hourLaterInputs = inputs;
         hourLaterInputs.clock = new Date(now + (60 * 60 * 1000)).toISOString();
         var hourLater = require('../lib/iob')(hourLaterInputs)[0];
         hourLater.iob.should.be.lessThan(0.75);
-        hourLater.bolussnooze.should.be.lessThan(0.75);
+        //hourLater.bolussnooze.should.be.lessThan(0.75);
         hourLater.iob.should.be.greaterThan(0);
         hourLater.activity.should.be.greaterThan(0.0065);
         hourLater.activity.should.be.lessThan(0.008);
@@ -154,7 +154,7 @@ describe('IOB', function() {
         var afterDIA = require('../lib/iob')(afterDIAInputs)[0];
 
         afterDIA.iob.should.equal(0);
-        afterDIA.bolussnooze.should.equal(0);
+        //afterDIA.bolussnooze.should.equal(0);
     });
 
     it('should calculate IOB with Ultra-fast curve peak setting of 65', function() {
@@ -179,7 +179,7 @@ describe('IOB', function() {
                     dia: 5,
                     insulinPeakTime: 65,
                     useCustomPeakTime: true,
-                    bolussnooze_dia_divisor: 2,
+                    //bolussnooze_dia_divisor: 2,
                     basalprofile: basalprofile,
                     current_basal: 1,
                     max_daily_basal: 1,
@@ -189,15 +189,15 @@ describe('IOB', function() {
 
         var rightAfterBolus = require('../lib/iob')(inputs)[0];
         rightAfterBolus.iob.should.equal(1);
-        rightAfterBolus.bolussnooze.should.equal(1);
+        //rightAfterBolus.bolussnooze.should.equal(1);
 
         var hourLaterInputs = inputs;
         hourLaterInputs.clock = new Date(now + (60 * 60 * 1000)).toISOString();
         var hourLater = require('../lib/iob')(hourLaterInputs)[0];
         hourLater.iob.should.be.lessThan(0.77);
-        hourLater.bolussnooze.should.be.lessThan(0.36);
+        //hourLater.bolussnooze.should.be.lessThan(0.36);
         hourLater.iob.should.be.greaterThan(0.72);
-        hourLater.bolussnooze.should.be.greaterThan(0.354);
+        //hourLater.bolussnooze.should.be.greaterThan(0.354);
 
         hourLater.activity.should.be.greaterThan(0.0055);
         hourLater.activity.should.be.lessThan(0.007);
@@ -207,7 +207,7 @@ describe('IOB', function() {
         var afterDIA = require('../lib/iob')(afterDIAInputs)[0];
 
         afterDIA.iob.should.equal(0);
-        afterDIA.bolussnooze.should.equal(0);
+        //afterDIA.bolussnooze.should.equal(0);
     });
 
     it('should calculate IOB with Ultra-rapid curve peak setting of 75', function() {
@@ -232,7 +232,7 @@ describe('IOB', function() {
                     dia: 5,
                     insulinPeakTime: 75,
                     useCustomPeakTime: true,
-                    bolussnooze_dia_divisor: 2,
+                    //bolussnooze_dia_divisor: 2,
                     basalprofile: basalprofile,
                     current_basal: 1,
                     max_daily_basal: 1,
@@ -242,16 +242,16 @@ describe('IOB', function() {
 
         var rightAfterBolus = require('../lib/iob')(inputs)[0];
         rightAfterBolus.iob.should.equal(1);
-        rightAfterBolus.bolussnooze.should.equal(1);
+        //rightAfterBolus.bolussnooze.should.equal(1);
 
         var hourLaterInputs = inputs;
         hourLaterInputs.clock = new Date(now + (60 * 60 * 1000)).toISOString();
         var hourLater = require('../lib/iob')(hourLaterInputs)[0];
         hourLater.iob.should.be.lessThan(0.81);
-        hourLater.bolussnooze.should.be.lessThan(0.5);
+        //hourLater.bolussnooze.should.be.lessThan(0.5);
         hourLater.iob.should.be.greaterThan(0.76);
-        hourLater.bolussnooze.should.be.greaterThan(0.40);
-        
+        //hourLater.bolussnooze.should.be.greaterThan(0.40);
+
         hourLater.iob.should.be.greaterThan(0);
         hourLater.activity.should.be.greaterThan(0.0047);
         hourLater.activity.should.be.lessThan(0.007);
@@ -261,7 +261,7 @@ describe('IOB', function() {
         var afterDIA = require('../lib/iob')(afterDIAInputs)[0];
 
         afterDIA.iob.should.equal(0);
-        afterDIA.bolussnooze.should.equal(0);
+        //afterDIA.bolussnooze.should.equal(0);
     });
 
     it('should calculate IOB with Ultra-rapid curve peak setting of 44 and DIA = 6', function() {
@@ -286,7 +286,7 @@ describe('IOB', function() {
                     dia: 6,
                     insulinPeakTime: 44,
                     useCustomPeakTime: true,
-                    bolussnooze_dia_divisor: 2,
+                    //bolussnooze_dia_divisor: 2,
                     basalprofile: basalprofile,
                     current_basal: 1,
                     max_daily_basal: 1,
@@ -296,17 +296,17 @@ describe('IOB', function() {
 
         var rightAfterBolus = require('../lib/iob')(inputs)[0];
         rightAfterBolus.iob.should.equal(1);
-        rightAfterBolus.bolussnooze.should.equal(1);
+        //rightAfterBolus.bolussnooze.should.equal(1);
 
         var hourLaterInputs = inputs;
         hourLaterInputs.clock = new Date(now + (60 * 60 * 1000)).toISOString();
         var hourLater = require('../lib/iob')(hourLaterInputs)[0];
         hourLater.iob.should.be.lessThan(0.59);
-        hourLater.bolussnooze.should.be.lessThan(0.23);
-        
+        //hourLater.bolussnooze.should.be.lessThan(0.23);
+
         hourLater.iob.should.be.greaterThan(0.57);
-        hourLater.bolussnooze.should.be.greaterThan(0.21);
-        
+        //hourLater.bolussnooze.should.be.greaterThan(0.21);
+
         hourLater.activity.should.be.greaterThan(0.007);
         hourLater.activity.should.be.lessThan(0.0085);
 
@@ -315,7 +315,7 @@ describe('IOB', function() {
         var afterDIA = require('../lib/iob')(afterDIAInputs)[0];
 
         afterDIA.iob.should.equal(0);
-        afterDIA.bolussnooze.should.equal(0);
+        //afterDIA.bolussnooze.should.equal(0);
     });
 
 
@@ -340,7 +340,7 @@ describe('IOB', function() {
                 }],
                 profile: {
                     dia: 5,
-                    bolussnooze_dia_divisor: 2,
+                    //bolussnooze_dia_divisor: 2,
                     basalprofile: basalprofile,
                     current_basal: 1,
                     max_daily_basal: 1,
@@ -350,13 +350,13 @@ describe('IOB', function() {
 
         var rightAfterBolus = require('../lib/iob')(inputs)[0];
         rightAfterBolus.iob.should.equal(1);
-        rightAfterBolus.bolussnooze.should.equal(1);
+        //rightAfterBolus.bolussnooze.should.equal(1);
 
         var hourLaterInputs = inputs;
         hourLaterInputs.clock = new Date(now + (60 * 60 * 1000)).toISOString();
         var hourLater = require('../lib/iob')(hourLaterInputs)[0];
         hourLater.iob.should.be.lessThan(0.8);
-        hourLater.bolussnooze.should.be.lessThan(.8);
+        //hourLater.bolussnooze.should.be.lessThan(.8);
         hourLater.iob.should.be.greaterThan(0);
 
         var afterDIAInputs = inputs;
@@ -364,11 +364,17 @@ describe('IOB', function() {
         var afterDIA = require('../lib/iob')(afterDIAInputs)[0];
 
         afterDIA.iob.should.equal(0);
-        afterDIA.bolussnooze.should.equal(0);
+        //afterDIA.bolussnooze.should.equal(0);
     });
 
+    it('should force minimum 5 hour DIA with Rapid-acting', function() {
 
-    it('should snooze fast if bolussnooze_dia_divisor is high', function() {
+        var basalprofile = [{
+            'i': 0,
+            'start': '00:00:00',
+            'rate': 1,
+            'minutes': 0
+        }];
 
         var now = Date.now(),
             timestamp = new Date(now).toISOString(),
@@ -380,16 +386,53 @@ describe('IOB', function() {
                     timestamp: timestamp
                 }],
                 profile: {
-                    dia: 3,
-                    bolussnooze_dia_divisor: 10
+                    dia: 5,
+                    //bolussnooze_dia_divisor: 2,
+                    basalprofile: basalprofile,
+                    current_basal: 1,
+                    max_daily_basal: 1,
+                    curve: 'rapid-acting'
                 }
             };
 
-        var snoozeInputs = inputs;
-        snoozeInputs.clock = new Date(now + (20 * 60 * 1000)).toISOString();
-        var snooze = require('../lib/iob')(snoozeInputs)[0];
-        snooze.bolussnooze.should.equal(0);
+        var hourLaterInputs = inputs;
+        hourLaterInputs.clock = new Date(now + (4 * 60 * 60 * 1000)).toISOString();
+
+        var hourLaterWith5 = require('../lib/iob')(hourLaterInputs)[0];
+
+        console.error(hourLaterWith5.iob);
+
+        hourLaterInputs.profile.dia = 3;
+
+        var hourLaterWith4 = require('../lib/iob')(hourLaterInputs)[0];
+
+        console.error(hourLaterWith4.iob);
+
+        hourLaterWith4.iob.should.equal(hourLaterWith5.iob);
     });
+
+    //it('should snooze fast if bolussnooze_dia_divisor is high', function() {
+
+        //var now = Date.now(),
+            //timestamp = new Date(now).toISOString(),
+            //inputs = {
+                //clock: timestamp,
+                //history: [{
+                    //_type: 'Bolus',
+                    //amount: 1,
+                    //timestamp: timestamp
+                //}],
+                //profile: {
+                    //dia: 3,
+                    //bolussnooze_dia_divisor: 10
+                //}
+            //};
+
+        //var snoozeInputs = inputs;
+        //snoozeInputs.clock = new Date(now + (20 * 60 * 1000)).toISOString();
+        //var snooze = require('../lib/iob')(snoozeInputs)[0];
+        //snooze.bolussnooze.should.equal(0);
+    //});
 
     it('should calculate IOB with Temp Basals', function() {
 
@@ -408,7 +451,8 @@ describe('IOB', function() {
                 history: [{
                     _type: 'TempBasalDuration',
                     'duration (min)': 30,
-                    date: timestamp60mAgo
+                    date: timestamp60mAgo,
+                    timestamp: timestamp60mAgo
                 }, {
                     _type: 'TempBasal',
                     rate: 2,
@@ -422,13 +466,14 @@ describe('IOB', function() {
                 }, {
                     _type: 'TempBasalDuration',
                     'duration (min)': 30,
-                    date: timestamp
+                    date: timestamp,
+                    timestamp: timestamp
                 }],
                 profile: {
                     dia: 3,
                     current_basal: 1,
                     max_daily_basal: 1,
-                    bolussnooze_dia_divisor: 2,
+                    //bolussnooze_dia_divisor: 2,
                     'basalprofile': basalprofile
                 }
             };
@@ -467,7 +512,8 @@ describe('IOB', function() {
             history: [{
                 _type: 'TempBasalDuration',
                 'duration (min)': 30,
-                date: timestampEarly
+                date: timestampEarly,
+                timestamp: timestampEarly,
             }, {
                 _type: 'TempBasal',
                 rate: 2,
@@ -481,11 +527,12 @@ describe('IOB', function() {
             }, {
                 _type: 'TempBasalDuration',
                 'duration (min)': 30,
-                date: timestamp
+                date: timestamp,
+                timestamp: timestamp,
             }],
             profile: {
                 dia: 3,
-                bolussnooze_dia_divisor: 2,
+                //bolussnooze_dia_divisor: 2,
                 basalprofile: basalprofile
             }
         };
@@ -527,7 +574,8 @@ describe('IOB', function() {
                 history: [{
                     _type: 'TempBasalDuration',
                     'duration (min)': 30,
-                    date: timestampEarly
+                    date: timestampEarly,
+                    timestamp: timestampEarly
                 }, {
                     _type: 'TempBasal',
                     rate: 2,
@@ -541,13 +589,14 @@ describe('IOB', function() {
                 }, {
                     _type: 'TempBasalDuration',
                     'duration (min)': 30,
-                    date: timestamp
+                    date: timestamp,
+                    timestamp: timestamp
                 }],
                 profile: {
                     dia: 3,
                     current_basal: 0.1,
                     max_daily_basal: 1,
-                    bolussnooze_dia_divisor: 2,
+                    //bolussnooze_dia_divisor: 2,
                     basalprofile: basalprofile
                 }
             };
@@ -583,7 +632,8 @@ describe('IOB', function() {
             history: [{
                 _type: 'TempBasalDuration',
                 'duration (min)': 30,
-                date: timestampEarly.unix()
+                date: timestampEarly.unix(),
+                timestamp: timestampEarly.format()
             }, {
                 _type: 'TempBasal',
                 rate: 2,
@@ -592,7 +642,8 @@ describe('IOB', function() {
             }, {
                 _type: 'TempBasalDuration',
                 'duration (min)': 30,
-                date: timestampEarly2.unix()
+                date: timestampEarly2.unix(),
+                timestamp: timestampEarly2.format()
             }, {
                 _type: 'TempBasal',
                 rate: 2,
@@ -601,7 +652,8 @@ describe('IOB', function() {
             }, {
                 _type: 'TempBasalDuration',
                 'duration (min)': 30,
-                date: timestampEarly3.unix()
+                date: timestampEarly3.unix(),
+                timestamp: timestampEarly3.format()
             }, {
                 _type: 'TempBasal',
                 rate: 2,
@@ -615,13 +667,14 @@ describe('IOB', function() {
             }, {
                 _type: 'TempBasalDuration',
                 'duration (min)': 30,
-                date: timestamp.unix()
+                date: timestamp.unix(),
+                timestamp: timestamp.format()
             }],
             profile: {
                 dia: 3,
                 current_basal: 0.1,
                 max_daily_basal: 1,
-                bolussnooze_dia_divisor: 2,
+                //bolussnooze_dia_divisor: 2,
                 basalprofile: basalprofile
             }
         };
@@ -672,7 +725,8 @@ describe('IOB', function() {
                 history: [{
                     _type: 'TempBasalDuration',
                     'duration (min)': 60,
-                    date: timestamp
+                    date: timestamp,
+                    timestamp: timestamp
                 }, {
                     _type: 'TempBasal',
                     rate: 2,
@@ -683,7 +737,7 @@ describe('IOB', function() {
                     dia: 3,
                     current_basal: 0.1,
                     max_daily_basal: 1,
-                    bolussnooze_dia_divisor: 2,
+                    //bolussnooze_dia_divisor: 2,
                     basalprofile: basalprofile
                 }
             };
@@ -694,6 +748,585 @@ describe('IOB', function() {
 
         hourLater.iob.should.be.lessThan(1);
         hourLater.iob.should.be.greaterThan(0.8);
+    });
+
+    it('should calculate IOB without counting time pump suspended at end of basal', function() {
+
+        var basalprofile = [{
+            'i': 0,
+            'start': '00:00:00',
+            'rate': 1,
+            'minutes': 0
+        }];
+        var now = Date.now(),
+            timestamp = new Date(now).toISOString(),
+            timestamp15mAgo = new Date(now - (15 * 60 * 1000)).toISOString(),
+            timestamp30mAgo = new Date(now - (30 * 60 * 1000)).toISOString(),
+            timestamp45mAgo = new Date(now - (45 * 60 * 1000)).toISOString(),
+            timestamp60mAgo = new Date(now - (60 * 60 * 1000)).toISOString(),
+            timestamp75mAgo = new Date(now - (75 * 60 * 1000)).toISOString(),
+
+            inputs = {
+                clock: timestamp,
+                history: [{
+                    _type: 'TempBasalDuration',
+                    'duration (min)': 15,
+                    date: timestamp60mAgo,
+                    timestamp: timestamp60mAgo
+                }, {
+                    _type: 'TempBasal',
+                    rate: 2,
+                    date: timestamp60mAgo,
+                    timestamp: timestamp60mAgo
+                }, {
+                    _type: 'TempBasalDuration',
+                    'duration (min)': 15,
+                    date: timestamp45mAgo,
+                    timestamp: timestamp45mAgo
+                }, {
+                    _type: 'TempBasal',
+                    rate: 0,
+                    date: timestamp45mAgo,
+                    timestamp: timestamp45mAgo
+                }],
+                profile: {
+                    dia: 3,
+                    current_basal: 1,
+                    suspend_zeros_iob: true,
+                    max_daily_basal: 1,
+                    //bolussnooze_dia_divisor: 2,
+                    'basalprofile': basalprofile
+                }
+            };
+
+        var iobInputs = inputs;
+
+        // Calculate IOB with inputs that will be the same as
+        var iobNowWithoutSuspend = require('../lib/iob')(iobInputs)[0];
+
+        inputs = {
+            clock: timestamp,
+            history: [{
+                _type: 'TempBasalDuration',
+                'duration (min)': 30,
+                date: timestamp60mAgo,
+                timestamp: timestamp60mAgo
+            }, {
+                _type: 'TempBasal',
+                rate: 2,
+                date: timestamp60mAgo,
+                timestamp: timestamp60mAgo
+            }, {
+                _type: 'PumpSuspend',
+                date: timestamp45mAgo,
+                timestamp: timestamp45mAgo
+            }, {
+                _type: 'PumpResume',
+                date: timestamp30mAgo,
+                timestamp: timestamp30mAgo
+            }],
+            profile: {
+                dia: 3,
+                current_basal: 1,
+                suspend_zeros_iob: true,
+                max_daily_basal: 1,
+                //bolussnooze_dia_divisor: 2,
+                'basalprofile': basalprofile
+            }
+        };
+
+        iobInputs = inputs;
+
+        var iobNowWithSuspend = require('../lib/iob')(iobInputs)[0];
+
+        iobNowWithSuspend.iob.should.equal(iobNowWithoutSuspend.iob);
+    });
+
+    it('should calculate IOB without counting time pump suspended in middle of basal', function() {
+
+        var basalprofile = [{
+            'i': 0,
+            'start': '00:00:00',
+            'rate': 1,
+            'minutes': 0
+        }];
+        var now = Date.now(),
+            timestamp = new Date(now).toISOString(),
+            timestamp15mAgo = new Date(now - (15 * 60 * 1000)).toISOString(),
+            timestamp30mAgo = new Date(now - (30 * 60 * 1000)).toISOString(),
+            timestamp45mAgo = new Date(now - (45 * 60 * 1000)).toISOString(),
+            timestamp60mAgo = new Date(now - (60 * 60 * 1000)).toISOString(),
+            timestamp75mAgo = new Date(now - (75 * 60 * 1000)).toISOString(),
+
+            inputs = {
+                clock: timestamp,
+                history: [{
+                    _type: 'TempBasalDuration',
+                    'duration (min)': 15,
+                    date: timestamp60mAgo,
+                    timestamp: timestamp60mAgo
+                }, {
+                    _type: 'TempBasal',
+                    rate: 2,
+                    date: timestamp60mAgo,
+                    timestamp: timestamp60mAgo
+                }, {
+                    _type: 'TempBasalDuration',
+                    'duration (min)': 15,
+                    date: timestamp45mAgo,
+                    timestamp: timestamp45mAgo
+                }, {
+                    _type: 'TempBasal',
+                    rate: 0,
+                    date: timestamp45mAgo,
+                    timestamp: timestamp45mAgo
+                }, {
+                    _type: 'TempBasalDuration',
+                    'duration (min)': 15,
+                    date: timestamp30mAgo,
+                    timestamp: timestamp30mAgo
+                }, {
+                    _type: 'TempBasal',
+                    rate: 2,
+                    date: timestamp30mAgo,
+                    timestamp: timestamp30mAgo
+                }],
+                profile: {
+                    dia: 3,
+                    current_basal: 1,
+                    suspend_zeros_iob: true,
+                    max_daily_basal: 1,
+                    //bolussnooze_dia_divisor: 2,
+                    'basalprofile': basalprofile
+                }
+            };
+
+        var iobInputs = inputs;
+
+        var iobNowWithoutSuspend = require('../lib/iob')(iobInputs)[0];
+
+        inputs = {
+                clock: timestamp,
+                history: [{
+                    _type: 'TempBasalDuration',
+                    'duration (min)': 45,
+                    date: timestamp60mAgo,
+                    timestamp: timestamp60mAgo
+                }, {
+                    _type: 'TempBasal',
+                    rate: 2,
+                    date: timestamp60mAgo,
+                    timestamp: timestamp60mAgo
+                }, {
+                    _type: 'PumpSuspend',
+                    date: timestamp45mAgo,
+                    timestamp: timestamp45mAgo
+                }, {
+                    _type: 'PumpResume',
+                    date: timestamp30mAgo,
+                    timestamp: timestamp30mAgo
+                }],
+                profile: {
+                    dia: 3,
+                    current_basal: 1,
+                    suspend_zeros_iob: true,
+                    max_daily_basal: 1,
+                    //bolussnooze_dia_divisor: 2,
+                    'basalprofile': basalprofile
+                }
+            };
+
+        iobInputs = inputs;
+
+        var iobNowWithSuspend = require('../lib/iob')(iobInputs)[0];
+
+        iobNowWithSuspend.iob.should.equal(iobNowWithoutSuspend.iob);
+
+    });
+
+    it('should calculate IOB without counting time pump suspended surrounding a basal', function() {
+
+        var basalprofile = [{
+            'i': 0,
+            'start': '00:00:00',
+            'rate': 1,
+            'minutes': 0
+        }];
+        var now = Date.now(),
+            timestamp = new Date(now).toISOString(),
+            timestamp15mAgo = new Date(now - (15 * 60 * 1000)).toISOString(),
+            timestamp30mAgo = new Date(now - (30 * 60 * 1000)).toISOString(),
+            timestamp45mAgo = new Date(now - (45 * 60 * 1000)).toISOString(),
+            timestamp60mAgo = new Date(now - (60 * 60 * 1000)).toISOString(),
+            timestamp75mAgo = new Date(now - (75 * 60 * 1000)).toISOString(),
+            timestamp90mAgo = new Date(now - (90 * 60 * 1000)).toISOString(),
+
+            inputs = {
+                clock: timestamp,
+                history: [{
+                    _type: 'TempBasalDuration',
+                    'duration (min)': 15,
+                    date: timestamp90mAgo,
+                    timestamp: timestamp90mAgo
+                }, {
+                    _type: 'TempBasal',
+                    rate: 2,
+                    date: timestamp90mAgo,
+                    timestamp: timestamp90mAgo
+                }, {
+                    _type: 'TempBasalDuration',
+                    'duration (min)': 45,
+                    date: timestamp75mAgo,
+                    timestamp: timestamp75mAgo
+                }, {
+                    _type: 'TempBasal',
+                    rate: 0,
+                    date: timestamp75mAgo,
+                    timestamp: timestamp75mAgo
+                }, {
+                    _type: 'TempBasalDuration',
+                    'duration (min)': 15,
+                    date: timestamp30mAgo,
+                    timestamp: timestamp30mAgo
+                }, {
+                    _type: 'TempBasal',
+                    rate: 2,
+                    date: timestamp30mAgo,
+                    timestamp: timestamp30mAgo
+                }],
+                profile: {
+                    dia: 3,
+                    current_basal: 1,
+                    suspend_zeros_iob: true,
+                    max_daily_basal: 1,
+                    //bolussnooze_dia_divisor: 2,
+                    'basalprofile': basalprofile
+                }
+            };
+
+        var iobInputs = inputs;
+
+        var iobNowWithoutSuspend = require('../lib/iob')(iobInputs)[0];
+
+        inputs = {
+            clock: timestamp,
+            history: [{
+                _type: 'TempBasalDuration',
+                'duration (min)': 30,
+                date: timestamp90mAgo,
+                timestamp: timestamp90mAgo
+            }, {
+                _type: 'TempBasal',
+                rate: 2,
+                date: timestamp90mAgo,
+                timestamp: timestamp90mAgo
+            }, {
+                _type: 'PumpSuspend',
+                date: timestamp75mAgo,
+                timestamp: timestamp75mAgo
+            }, {
+                _type: 'TempBasalDuration',
+                'duration (min)': 15,
+                date: timestamp60mAgo,
+                timestamp: timestamp60mAgo
+            }, {
+                _type: 'TempBasal',
+                rate: 2,
+                date: timestamp60mAgo,
+                timestamp: timestamp60mAgo
+            }, {
+                _type: 'TempBasalDuration',
+                'duration (min)': 30,
+                date: timestamp45mAgo,
+                timestamp: timestamp45mAgo
+            }, {
+                _type: 'TempBasal',
+                rate: 2,
+                date: timestamp45mAgo,
+                timestamp: timestamp45mAgo
+            }, {
+                _type: 'PumpResume',
+                date: timestamp30mAgo,
+                timestamp: timestamp30mAgo
+            }],
+            profile: {
+                dia: 3,
+                current_basal: 1,
+                suspend_zeros_iob: true,
+                max_daily_basal: 1,
+                //bolussnooze_dia_divisor: 2,
+                'basalprofile': basalprofile
+            }
+        };
+
+        iobInputs = inputs;
+
+        var iobNowWithSuspend = require('../lib/iob')(iobInputs)[0];
+
+        iobNowWithSuspend.iob.should.equal(iobNowWithoutSuspend.iob);
+    });
+
+    it('should calculate IOB without counting time pump suspended at beginning of basal', function() {
+
+        var basalprofile = [{
+            'i': 0,
+            'start': '00:00:00',
+            'rate': 1,
+            'minutes': 0
+        }];
+        var now = Date.now(),
+            timestamp = new Date(now).toISOString(),
+            timestamp15mAgo = new Date(now - (15 * 60 * 1000)).toISOString(),
+            timestamp30mAgo = new Date(now - (30 * 60 * 1000)).toISOString(),
+            timestamp45mAgo = new Date(now - (45 * 60 * 1000)).toISOString(),
+            timestamp60mAgo = new Date(now - (60 * 60 * 1000)).toISOString(),
+            timestamp75mAgo = new Date(now - (75 * 60 * 1000)).toISOString(),
+
+            inputs = {
+                clock: timestamp,
+                history: [{
+                    _type: 'TempBasalDuration',
+                    'duration (min)': 15,
+                    date: timestamp45mAgo,
+                    timestamp: timestamp45mAgo
+                }, {
+                    _type: 'TempBasal',
+                    rate: 0,
+                    date: timestamp45mAgo,
+                    timestamp: timestamp45mAgo
+                }, {
+                    _type: 'TempBasalDuration',
+                    'duration (min)': 15,
+                    date: timestamp30mAgo,
+                    timestamp: timestamp30mAgo
+                }, {
+                    _type: 'TempBasal',
+                    rate: 2,
+                    date: timestamp30mAgo,
+                    timestamp: timestamp30mAgo
+                }],
+                profile: {
+                    dia: 3,
+                    current_basal: 1,
+                    suspend_zeros_iob: true,
+                    max_daily_basal: 1,
+                    //bolussnooze_dia_divisor: 2,
+                    'basalprofile': basalprofile
+                }
+            };
+
+        var iobInputs = inputs;
+
+        var iobNowWithoutSuspend = require('../lib/iob')(iobInputs)[0];
+
+        inputs = {
+            clock: timestamp,
+            history: [{
+                _type: 'PumpSuspend',
+                date: timestamp45mAgo,
+                timestamp: timestamp45mAgo
+            }, {
+                _type: 'TempBasalDuration',
+                'duration (min)': 30,
+                date: timestamp45mAgo,
+                timestamp: timestamp45mAgo
+            }, {
+                _type: 'TempBasal',
+                rate: 2,
+                date: timestamp45mAgo,
+                timestamp: timestamp45mAgo
+            }, {
+                _type: 'PumpResume',
+                date: timestamp30mAgo,
+                timestamp: timestamp30mAgo
+            }],
+            profile: {
+                dia: 3,
+                current_basal: 1,
+                suspend_zeros_iob: true,
+                max_daily_basal: 1,
+                'basalprofile': basalprofile
+            }
+        };
+
+        var iobInputs = inputs;
+
+        var iobNowWithSuspend = require('../lib/iob')(iobInputs)[0];
+
+        iobNowWithSuspend.iob.should.equal(iobNowWithoutSuspend.iob);
+    });
+
+    it('should calculate IOB without counting time pump suspended when pump suspend prior to history start', function() {
+
+        var basalprofile = [{
+            'i': 0,
+            'start': '00:00:00',
+            'rate': 1,
+            'minutes': 0
+        }];
+        var now = Date.now(),
+            timestamp = new Date(now).toISOString(),
+            timestamp15mAgo = new Date(now - (15 * 60 * 1000)).toISOString(),
+            timestamp30mAgo = new Date(now - (30 * 60 * 1000)).toISOString(),
+            timestamp45mAgo = new Date(now - (45 * 60 * 1000)).toISOString(),
+            timestamp60mAgo = new Date(now - (60 * 60 * 1000)).toISOString(),
+            timestamp75mAgo = new Date(now - (75 * 60 * 1000)).toISOString(),
+            timestamp480mAgo = new Date(now - (480 * 60 * 1000)).toISOString(),
+
+            inputs = {
+                clock: timestamp,
+                history: [{
+                    _type: 'TempBasalDuration',
+                    'duration (min)': 435,
+                    date: timestamp480mAgo,
+                    timestamp: timestamp480mAgo
+                }, {
+                    _type: 'TempBasal',
+                    rate: 0,
+                    date: timestamp480mAgo,
+                    timestamp: timestamp480mAgo
+                }, {
+                    _type: 'TempBasalDuration',
+                    'duration (min)': 15,
+                    date: timestamp45mAgo,
+                    timestamp: timestamp45mAgo
+                }, {
+                    _type: 'TempBasal',
+                    rate: 2,
+                    date: timestamp45mAgo,
+                    timestamp: timestamp45mAgo
+                }],
+                profile: {
+                    dia: 3,
+                    current_basal: 1,
+                    suspend_zeros_iob: true,
+                    max_daily_basal: 1,
+                    //bolussnooze_dia_divisor: 2,
+                    'basalprofile': basalprofile
+                }
+            };
+
+        var iobInputs = inputs;
+
+        var iobNowWithoutSuspend = require('../lib/iob')(iobInputs)[0];
+
+        inputs = {
+            clock: timestamp,
+            history: [{
+                _type: 'TempBasalDuration',
+                'duration (min)': 30,
+                date: timestamp60mAgo,
+                timestamp: timestamp60mAgo
+            }, {
+                _type: 'TempBasal',
+                rate: 2,
+                date: timestamp60mAgo,
+                timestamp: timestamp60mAgo
+            }, {
+                _type: 'PumpResume',
+                date: timestamp45mAgo,
+                timestamp: timestamp45mAgo
+            }],
+            profile: {
+                dia: 3,
+                current_basal: 1,
+                suspend_zeros_iob: true,
+                max_daily_basal: 1,
+                //bolussnooze_dia_divisor: 2,
+                'basalprofile': basalprofile
+            }
+        };
+
+        iobInputs = inputs;
+
+        var iobNowWithSuspend = require('../lib/iob')(iobInputs)[0];
+
+        iobNowWithSuspend.iob.should.equal(iobNowWithoutSuspend.iob);
+    });
+
+    it('should calculate IOB without counting time pump suspended when pump is currently suspended', function() {
+
+        var basalprofile = [{
+            'i': 0,
+            'start': '00:00:00',
+            'rate': 1,
+            'minutes': 0
+        }];
+        var now = Date.now(),
+            timestamp = new Date(now).toISOString(),
+            timestamp15mAgo = new Date(now - (15 * 60 * 1000)).toISOString(),
+            timestamp30mAgo = new Date(now - (30 * 60 * 1000)).toISOString(),
+            timestamp45mAgo = new Date(now - (45 * 60 * 1000)).toISOString(),
+            timestamp60mAgo = new Date(now - (60 * 60 * 1000)).toISOString(),
+            timestamp75mAgo = new Date(now - (75 * 60 * 1000)).toISOString(),
+
+            inputs = {
+                clock: timestamp,
+                history: [{
+                    _type: 'TempBasalDuration',
+                    'duration (min)': 15,
+                    date: timestamp45mAgo,
+                    timestamp: timestamp45mAgo
+                }, {
+                    _type: 'TempBasal',
+                    rate: 2,
+                    date: timestamp45mAgo,
+                    timestamp: timestamp45mAgo
+                }, {
+                    _type: 'TempBasalDuration',
+                    'duration (min)': 30,
+                    date: timestamp30mAgo,
+                    timestamp: timestamp30mAgo
+                }, {
+                    _type: 'TempBasal',
+                    rate: 2,
+                    date: timestamp30mAgo,
+                    timestamp: timestamp30mAgo
+                }],
+                profile: {
+                    dia: 3,
+                    current_basal: 1,
+                    suspend_zeros_iob: true,
+                    max_daily_basal: 1,
+                    //bolussnooze_dia_divisor: 2,
+                    'basalprofile': basalprofile
+                }
+            };
+
+        var iobInputs = inputs;
+
+        var iobNowWithoutSuspend = require('../lib/iob')(iobInputs)[0];
+
+            inputs = {
+                clock: timestamp,
+                history: [{
+                    _type: 'TempBasalDuration',
+                    'duration (min)': 30,
+                    date: timestamp45mAgo,
+                    timestamp: timestamp45mAgo
+                }, {
+                    _type: 'TempBasal',
+                    rate: 2,
+                    date: timestamp45mAgo,
+                    timestamp: timestamp45mAgo
+                }, {
+                    _type: 'PumpSuspend',
+                    date: timestamp30mAgo,
+                    timestamp: timestamp30mAgo
+                }],
+                profile: {
+                    dia: 3,
+                    current_basal: 1,
+                    suspend_zeros_iob: true,
+                    max_daily_basal: 1,
+                    //bolussnooze_dia_divisor: 2,
+                    'basalprofile': basalprofile
+                }
+            };
+
+        var iobNowWithSuspend = require('../lib/iob')(iobInputs)[0];
+
+        iobNowWithSuspend.iob.should.equal(iobNowWithoutSuspend.iob);
     });
 
 
@@ -742,7 +1375,7 @@ describe('IOB', function() {
                 dia: 3,
                 current_basal: 2,
                 max_daily_basal: 2,
-                bolussnooze_dia_divisor: 2,
+                //bolussnooze_dia_divisor: 2,
                 'basalprofile': basalprofile
             }
         };
@@ -769,7 +1402,8 @@ describe('IOB', function() {
                 history: [{
                     _type: 'TempBasalDuration',
                     'duration (min)': 30,
-                    date: timestamp31mAgo
+                    date: timestamp31mAgo,
+                    timestamp: timestamp31mAgo
                 }, {
                     _type: 'TempBasal',
                     rate: 2,
@@ -783,7 +1417,8 @@ describe('IOB', function() {
                 }, {
                     _type: 'TempBasalDuration',
                     'duration (min)': 30,
-                    date: timestamp30mAgo
+                    date: timestamp30mAgo,
+                    timestamp: timestamp30mAgo
                 }],
                 profile: {
                     dia: 3,
@@ -819,7 +1454,8 @@ describe('IOB', function() {
                 history: [{
                     _type: 'TempBasalDuration',
                     'duration (min)': 30,
-                    date: timestampEarly
+                    date: timestampEarly,
+                    timestamp: timestampEarly
                 }, {
                     _type: 'TempBasal',
                     rate: 1,
@@ -833,13 +1469,14 @@ describe('IOB', function() {
                 }, {
                     _type: 'TempBasalDuration',
                     'duration (min)': 30,
-                    date: timestamp
+                    date: timestamp,
+                    timestamp: timestamp
                 }],
                 profile: {
                     dia: 3,
                     current_basal: 2,
                     max_daily_basal: 2,
-                    bolussnooze_dia_divisor: 2,
+                    //bolussnooze_dia_divisor: 2,
                     'basalprofile': basalprofile
                 }
             };
@@ -870,7 +1507,7 @@ describe('IOB', function() {
                     dia: 3,
                     current_basal: 1,
                     max_daily_basal: 1,
-                    bolussnooze_dia_divisor: 2
+                    //bolussnooze_dia_divisor: 2
                 }
             };
 
@@ -905,7 +1542,7 @@ describe('IOB', function() {
                     dia: 3,
                     current_basal: 1,
                     max_daily_basal: 1,
-                    bolussnooze_dia_divisor: 2
+                    //bolussnooze_dia_divisor: 2
                 }
             };
 
@@ -938,7 +1575,7 @@ describe('IOB', function() {
                 }],
                 profile: {
                     dia: 4,
-                    bolussnooze_dia_divisor: 2,
+                    //bolussnooze_dia_divisor: 2,
                     basalprofile: basalprofile,
                     current_basal: 1,
                     max_daily_basal: 1
@@ -948,13 +1585,13 @@ describe('IOB', function() {
 
         var rightAfterBolus = require('../lib/iob')(inputs)[0];
         rightAfterBolus.iob.should.equal(1);
-        rightAfterBolus.bolussnooze.should.equal(1);
+        //rightAfterBolus.bolussnooze.should.equal(1);
 
         var hourLaterInputs = inputs;
         hourLaterInputs.clock = new Date(now + (60 * 60 * 1000)).toISOString();
         var hourLater = require('../lib/iob')(hourLaterInputs)[0];
         hourLater.iob.should.be.lessThan(1);
-        hourLater.bolussnooze.should.be.lessThan(.5);
+        //hourLater.bolussnooze.should.be.lessThan(.5);
         hourLater.iob.should.be.greaterThan(0);
 
         var after3hInputs = inputs;
